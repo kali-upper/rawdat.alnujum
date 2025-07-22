@@ -57,7 +57,7 @@ export default function Header() {
               onClick={() => scrollToSection("contact")}
               className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium"
             >
-              اتصل بنا
+              تواصل معنا
             </button>
           </nav>
 
@@ -106,7 +106,7 @@ export default function Header() {
                 onClick={() => scrollToSection("contact")}
                 className="block w-full text-left px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors duration-200"
               >
-                اتصل بنا
+                تواصل معنا
               </button>
             </div>
           </div>

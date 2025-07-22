@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
+import emailjs from "emailjs-com";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
+    title: "Contact Us", // Added title for email subject
+    time: "", // Add a time field
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -24,14 +27,41 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const formElement = e.currentTarget as HTMLFormElement;
 
-    setSubmitted(true);
-    setIsSubmitting(false);
-    setFormData({ name: "", email: "", message: "" });
+    // Create a hidden input for the current time
+    const timeInput = document.createElement("input");
+    timeInput.type = "hidden";
+    timeInput.name = "time";
+    timeInput.value = new Date().toLocaleString();
+    formElement.appendChild(timeInput);
 
-    setTimeout(() => setSubmitted(false), 3000);
+    try {
+      await emailjs.sendForm(
+        "service_1xindqb",
+        "template_u6qrcvj",
+        formElement,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY // Use environment variable for Public Key
+      );
+      setSubmitted(true);
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+        title: "Contact Us",
+        time: "",
+      }); // Reset time field too
+    } catch (error) {
+      console.error("Error sending email:", error);
+      alert("Failed to send message. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+      // Remove the dynamically added time input
+      if (timeInput.parentNode) {
+        timeInput.parentNode.removeChild(timeInput);
+      }
+      setTimeout(() => setSubmitted(false), 3000);
+    }
   };
 
   return (

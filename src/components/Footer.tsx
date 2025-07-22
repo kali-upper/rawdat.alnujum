@@ -87,7 +87,7 @@ export default function Footer() {
                   }
                   className="text-blue-100 hover:text-white transition-colors duration-200"
                 >
-                  اتصل بنا
+                  تواصل معنا
                 </button>
               </li>
             </ul>
